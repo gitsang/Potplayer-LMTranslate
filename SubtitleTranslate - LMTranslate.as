@@ -8,9 +8,13 @@
 
     Config "SubtitleTranslate - LMTranslate.yaml" next to this script:
       context: 8            # previous subtitle pairs kept as context (0 = off)
+      default_model: siliconflow/Qwen/Qwen2.5-7B-Instruct   # optional
+      api_key: sk-xxxx                                      # optional
       providers:
         siliconflow: https://api.siliconflow.cn/v1
         openai: https://api.openai.com/v1
+    When the login fields are empty, default_model / api_key from the YAML
+    are used (manage everything with LMTranslateConfig.exe).
     provider-id must NOT contain '/'.
     The model-id may contain '/' (everything after the first '/' is the model).
 
@@ -23,13 +27,15 @@
       string (must assign) ; .substr(pos,len) ; .Left/.Right(n) ; .length()
 */
 
-string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PotPlayer-LMTranslate/1.2";
+string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PotPlayer-LMTranslate/1.3";
 
 // ---- configured state ----
 string g_endpoint;   // full chat/completions URL
 string g_model;      // model id sent to the API
 string g_key;        // api key
 dictionary g_providers;
+string g_default_model = "";  // yaml fallback when login field is empty
+string g_api_key = "";        // yaml fallback when key field is empty
 
 // ---- rolling context ----
 array<string> g_ctx_src;
@@ -45,7 +51,7 @@ string GetTitle()
 
 string GetVersion()
 {
-    return "1.2.0";
+    return "1.3.0";
 }
 
 string GetDesc()
@@ -148,6 +154,8 @@ void ClearContext()
 void LoadProviders()
 {
     g_providers.deleteAll();
+    g_default_model = "";
+    g_api_key = "";
 
     uintptr fp = HostFileOpen(ScriptPath("SubtitleTranslate - LMTranslate.yaml"));
     if (fp == 0) return;
@@ -195,6 +203,14 @@ void LoadProviders()
                         if (val.MakeLower() == "off") g_ctx_max = 0;
                         else g_ctx_max = StrToInt(val);
                     }
+                    else if (lid == "default_model")
+                    {
+                        g_default_model = val;
+                    }
+                    else if (lid == "api_key")
+                    {
+                        g_api_key = val;
+                    }
                     else if (id.find("/") == -1
                         && (val.Left(7) == "http://" || val.Left(8) == "https://"))
                     {
@@ -219,8 +235,14 @@ string BuildEndpoint(string url)
 // ---- login ----
 string ServerLogin(string User, string Pass)
 {
+    LoadProviders();
+
+    // empty fields fall back to yaml defaults (set via LMTranslateConfig.exe)
     User = User.Trim();
-    if (User.empty()) return "{$CP936=请填写模型，格式 provider-id/model-id$}{$CP0=Enter model as provider-id/model-id$}";
+    if (User.empty()) User = g_default_model.Trim();
+    if (Pass.empty()) Pass = g_api_key;
+
+    if (User.empty()) return "{$CP936=请填写模型（provider-id/model-id），或在 YAML 中配置 default_model$}{$CP0=Enter model (provider-id/model-id), or set default_model in the YAML$}";
 
     int slash = User.find("/");
     if (slash <= 0)
@@ -231,7 +253,6 @@ string ServerLogin(string User, string Pass)
     if (provider.empty() || model.empty())
         return "{$CP936=provider-id 与 model-id 都不能为空$}{$CP0=provider-id and model-id must not be empty$}";
 
-    LoadProviders();
     string url;
     if (!g_providers.get(provider, url))
     {
