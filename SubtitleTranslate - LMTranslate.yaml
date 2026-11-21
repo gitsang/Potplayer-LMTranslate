@@ -14,7 +14,7 @@
 context: 8
 
 # 可选：默认模型与密钥。配置后 PotPlayer 面板两个框留空即可自动使用。
-# 推荐用 LMTranslateConfig.exe 图形化管理（含 API 连通测试）。
+# 推荐用 SubtitleTranslate - LMTranslate.exe 图形化管理（含 API 连通测试）。
 # 注意：api_key 为明文存储，请勿把含密钥的 yaml 分享给他人。
 # default_model: siliconflow/Qwen/Qwen2.5-7B-Instruct
 # api_key: sk-xxxx

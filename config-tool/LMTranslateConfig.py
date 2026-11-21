@@ -9,7 +9,7 @@ Manages "SubtitleTranslate - LMTranslate.yaml" next to this executable:
   - one-click API connectivity test
 
 Build (Windows, Python 3.13 with tkinter):
-  pyinstaller --onefile --windowed --uac-admin --name LMTranslateConfig ^
+  pyinstaller --onefile --windowed --uac-admin --name "SubtitleTranslate - LMTranslate" ^
       --icon "SubtitleTranslate - LMTranslate.ico" LMTranslateConfig.py
 
 The --uac-admin manifest lets the tool save into Program Files.
@@ -22,7 +22,7 @@ import urllib.error
 
 YAML_NAME = "SubtitleTranslate - LMTranslate.yaml"
 
-HEADER = """# LMTranslate 配置（由 LMTranslateConfig 生成）
+HEADER = """# LMTranslate 配置（由 SubtitleTranslate - LMTranslate.exe 生成）
 # provider-id 不能含斜线 /；地址填到 /v1 即可，插件自动补 /chat/completions
 # context: 翻译上下文保留的最近字幕条数（0 = 关闭）
 # default_model / api_key: PotPlayer 面板两个框留空时自动使用

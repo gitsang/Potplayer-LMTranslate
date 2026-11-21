@@ -14,7 +14,7 @@
         siliconflow: https://api.siliconflow.cn/v1
         openai: https://api.openai.com/v1
     When the login fields are empty, default_model / api_key from the YAML
-    are used (manage everything with LMTranslateConfig.exe).
+    are used (manage everything with SubtitleTranslate - LMTranslate.exe).
     provider-id must NOT contain '/'.
     The model-id may contain '/' (everything after the first '/' is the model).
 
@@ -237,7 +237,7 @@ string ServerLogin(string User, string Pass)
 {
     LoadProviders();
 
-    // empty fields fall back to yaml defaults (set via LMTranslateConfig.exe)
+    // empty fields fall back to yaml defaults (set via SubtitleTranslate - LMTranslate.exe)
     User = User.Trim();
     if (User.empty()) User = g_default_model.Trim();
     if (Pass.empty()) Pass = g_api_key;

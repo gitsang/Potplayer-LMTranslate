@@ -7,7 +7,7 @@ PotPlayer 实时字幕翻译插件，对接任意 **OpenAI 兼容 LLM API**（Si
 ## 特性
 
 - **两个输入框搞定配置**：模型框填 `provider-id/model-id`，密钥框填 API Key
-- **图形化配置工具**：`LMTranslateConfig.exe`（Releases 下载）可视化管理服务商、上下文、默认模型/密钥，一键测试 API 连通
+- **图形化配置工具**：`SubtitleTranslate - LMTranslate.exe`（Releases 下载）可视化管理服务商、上下文、默认模型/密钥，一键测试 API 连通
 - **YAML 默认配置**：`default_model` / `api_key` 写进 YAML 后，PotPlayer 面板两个框留空即可自动使用
 - **provider 与模型解耦**：服务商地址统一在 YAML 里维护，换模型不用改 URL
 - **模型名可含斜线**：按第一个 `/` 分割，`siliconflow/Qwen/Qwen2.5-7B-Instruct` 这类带斜线的模型名直接支持
@@ -68,7 +68,7 @@ providers:
 
 ### 3. 图形化配置（推荐）
 
-从 [Releases](../../releases) 下载 `LMTranslateConfig.exe`，放到插件同目录（或任意位置），双击运行（自动请求管理员权限以便写入 Program Files）：
+从 [Releases](../../releases) 下载 `SubtitleTranslate - LMTranslate.exe`，放到插件同目录（或任意位置），双击运行（自动请求管理员权限以便写入 Program Files）：
 
 - 服务商列表增删改（provider-id + API 地址）
 - 上下文条数、默认模型、API 密钥（可隐藏显示）
@@ -78,7 +78,7 @@ providers:
 源码在 `config-tool/LMTranslateConfig.py`（Python 3 + tkinter），自行打包：
 
 ```bat
-pyinstaller --onefile --windowed --uac-admin --name LMTranslateConfig ^
+pyinstaller --onefile --windowed --uac-admin --name "SubtitleTranslate - LMTranslate" ^
     --icon "SubtitleTranslate - LMTranslate.ico" config-tool\LMTranslateConfig.py
 ```
 
