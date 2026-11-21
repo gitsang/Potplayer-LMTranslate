@@ -1,0 +1,27 @@
+# LMTranslate provider 配置
+# 格式：providers: 下面每行一个服务商  id: API基础地址
+# 规则：
+#   - provider-id 不能包含斜线 /
+#   - 地址填到 /v1 这一层即可，插件自动补 /chat/completions
+#     （直接填完整的 .../chat/completions 也可以）
+#   - # 后面是注释
+# 用法：PotPlayer 翻译设置第一个框填 provider-id/model-id
+#   例如 siliconflow/qwen/qwen2.5-7b → 服务商 siliconflow，模型 qwen/qwen2.5-7b
+
+# 翻译上下文：保留最近 N 条「原文→译文」作为对话历史发给模型，
+# 让人名/代词/术语前后一致，也能接住被拆成多条字幕的半句话。
+# 0 或 off = 关闭上下文（每条独立翻译）。换视频时自动清空。
+context: 8
+
+providers:
+  siliconflow: https://api.siliconflow.cn/v1
+  openai: https://api.openai.com/v1
+  deepseek: https://api.deepseek.com/v1
+  moonshot: https://api.moonshot.cn/v1
+  zhipu: https://open.bigmodel.cn/api/paas/v4
+  dashscope: https://dashscope.aliyuncs.com/compatible-mode/v1
+  openrouter: https://openrouter.ai/api/v1
+  groq: https://api.groq.com/openai/v1
+  together: https://api.together.xyz/v1
+  ollama: http://localhost:11434/v1
+  lmstudio: http://localhost:1234/v1
