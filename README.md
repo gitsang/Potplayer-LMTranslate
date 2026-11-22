@@ -17,14 +17,17 @@ PotPlayer 实时字幕翻译插件，对接任意 **OpenAI 兼容 LLM API**（Si
 
 ## 安装
 
-把以下 3 个文件复制到 PotPlayer 安装目录的扩展文件夹（需要管理员权限）：
+从 [Releases](../../releases) 下载 **`LMTranslate-v1.3.0-win64.zip`**，把包内 4 个文件解压到 PotPlayer 安装目录的扩展文件夹（需要管理员权限）：
 
 ```
 C:\Program Files\DAUM\PotPlayer\Extension\Subtitle\Translate\
   ├─ SubtitleTranslate - LMTranslate.as     插件本体
   ├─ SubtitleTranslate - LMTranslate.ico    图标
-  └─ SubtitleTranslate - LMTranslate.yaml   provider 与上下文配置
+  ├─ SubtitleTranslate - LMTranslate.yaml   provider 与上下文配置
+  └─ SubtitleTranslate - LMTranslate.exe    图形化配置工具
 ```
+
+> 以 zip 发布是为了保留文件名中的空格（GitHub 会把单独上传的资产文件名里的空格转成点）。
 
 重启 PotPlayer。
 
@@ -68,7 +71,7 @@ providers:
 
 ### 3. 图形化配置（推荐）
 
-从 [Releases](../../releases) 下载 `SubtitleTranslate - LMTranslate.exe`，放到插件同目录（或任意位置），双击运行（自动请求管理员权限以便写入 Program Files）：
+完整包已含 `SubtitleTranslate - LMTranslate.exe`（也可单独从源码打包），放到插件同目录（或任意位置），双击运行（自动请求管理员权限以便写入 Program Files）：
 
 - 服务商列表增删改（provider-id + API 地址）
 - 上下文条数、默认模型、API 密钥（可隐藏显示）
